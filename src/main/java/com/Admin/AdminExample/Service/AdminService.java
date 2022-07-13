@@ -18,6 +18,14 @@ public class AdminService implements AdminImpl{
     private AdminRepository adminRepository;
     @Override
     public AdminEntity createAdmin(AdminEntity entity) throws AdminException {
+        AdminEntity entity1=adminRepository.findByEmail(entity.getEmail());
+        if (entity1!=null){
+            throw new AdminException(HttpStatus.FORBIDDEN," Email Already Exist");
+        }
+        AdminEntity entity2=adminRepository.findByPhoneNumber(entity.getPhoneNumber());
+        if (entity2!=null){
+            throw new AdminException(HttpStatus.FORBIDDEN,"PhoneNumber Already Exist");
+        }
         if (TypesOfRole.SUPER_ADMIN.equals(entity.getRoles())) {
                 return adminRepository.save(entity);
         } else {
@@ -43,14 +51,14 @@ public class AdminService implements AdminImpl{
     }
 
     @Override
-    public AdminEntity updateAdminById(Long id,AdminEntity entity)throws AdminException {
+    public AdminEntity updateAdminById(Long id, AdminEntity entity)throws AdminException {
         AdminEntity entity1=adminRepository.findByEmail(entity.getEmail());
-        if (entity1!=null){
-            throw new AdminException(HttpStatus.FORBIDDEN,"Invalid Email");
+        if (entity1!=null && !entity.getEmail().equals(entity1.getEmail())){
+            throw new AdminException(HttpStatus.FORBIDDEN," Email Already Exist with Another Id");
         }
         AdminEntity entity2=adminRepository.findByPhoneNumber(entity.getPhoneNumber());
-        if (entity2!=null){
-            throw new AdminException(HttpStatus.FORBIDDEN,"Invalid PhoneNumber");
+        if (entity2!=null && !entity.getPhoneNumber().equals(entity2.getPhoneNumber())){
+            throw new AdminException(HttpStatus.FORBIDDEN,"PhoneNumber Already Exist with Another Id");
         }
         return adminRepository.save(entity);
     }
