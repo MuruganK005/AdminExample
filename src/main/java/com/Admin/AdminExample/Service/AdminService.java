@@ -1,7 +1,6 @@
 package com.Admin.AdminExample.Service;
 
 import com.Admin.AdminExample.Entity.AdminEntity;
-import com.Admin.AdminExample.Entity.SuperAdmin;
 import com.Admin.AdminExample.Enum.TypesOfRole;
 import com.Admin.AdminExample.Exception.AdminException;
 import com.Admin.AdminExample.Repository.AdminRepository;
@@ -44,7 +43,15 @@ public class AdminService implements AdminImpl{
     }
 
     @Override
-    public Optional<AdminEntity> updateAdminById(Long id) {
-        return adminRepository.findById(id);
+    public AdminEntity updateAdminById(Long id,AdminEntity entity)throws AdminException {
+        AdminEntity entity1=adminRepository.findByEmail(entity.getEmail());
+        if (entity1!=null){
+            throw new AdminException(HttpStatus.FORBIDDEN,"Invalid Email");
+        }
+        AdminEntity entity2=adminRepository.findByPhoneNumber(entity.getPhoneNumber());
+        if (entity2!=null){
+            throw new AdminException(HttpStatus.FORBIDDEN,"Invalid PhoneNumber");
+        }
+        return adminRepository.save(entity);
     }
 }

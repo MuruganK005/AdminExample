@@ -15,5 +15,7 @@ public interface AdminImpl {
 
     String deleteAdminById(Long id);
 
-    Optional<AdminEntity> updateAdminById(Long id);
+//    AdminEntity updateAdminById(Long id);
+
+    AdminEntity updateAdminById(Long id, AdminEntity entity)throws AdminException;
 }

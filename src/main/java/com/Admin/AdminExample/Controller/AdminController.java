@@ -31,8 +31,8 @@ public class AdminController {
         return adminService.deleteAdminById(id);
     }
     @PutMapping("/{id}")
-    public Optional<AdminEntity> updateAdminById(@PathVariable Long id){
-        return adminService.updateAdminById(id);
+    public AdminEntity updateAdminById(@PathVariable Long id,@RequestBody AdminEntity entity) throws AdminException {
+        return adminService.updateAdminById(id,entity);
     }
 
 }
