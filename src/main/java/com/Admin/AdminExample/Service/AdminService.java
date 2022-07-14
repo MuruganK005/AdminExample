@@ -4,6 +4,7 @@ import com.Admin.AdminExample.Entity.AdminEntity;
 import com.Admin.AdminExample.Enum.TypesOfRole;
 import com.Admin.AdminExample.Exception.AdminException;
 import com.Admin.AdminExample.Repository.AdminRepository;
+import com.Admin.AdminExample.dto.AdminDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,16 +18,16 @@ public class AdminService implements AdminImpl{
     @Autowired
     private AdminRepository adminRepository;
     @Override
-    public AdminEntity createAdmin(AdminEntity entity) throws AdminException {
-        AdminEntity entity1=adminRepository.findByEmail(entity.getEmail());
-        if (entity1!=null){
+    public AdminDto createAdmin(AdminDto entity) throws AdminException {
+        Optional<AdminEntity> entity1=adminRepository.findByEmail(entity.getEmail());
+        if (entity1.isPresent() && entity1.get().getId() != entity.getId()){
             throw new AdminException(HttpStatus.FORBIDDEN," Email Already Exist");
         }
-        AdminEntity entity2=adminRepository.findByPhoneNumber(entity.getPhoneNumber());
-        if (entity2!=null){
+        Optional<AdminEntity> entity2=adminRepository.findByPhoneNumber(entity.getPhoneNumber());
+        if (entity2.isPresent() && entity2.get().getId() != entity.getId()){
             throw new AdminException(HttpStatus.FORBIDDEN,"PhoneNumber Already Exist");
         }
-        if (TypesOfRole.SUPER_ADMIN.equals(entity.getRoles())) {
+        if (TypesOfRole.SUPER_ADMIN.equals(entity.getRolesCreator())) {
                 return adminRepository.save(entity);
         } else {
             throw new AdminException(HttpStatus.BAD_REQUEST,"You are Not Super_Admin");
@@ -49,17 +50,17 @@ public class AdminService implements AdminImpl{
         return "Admin "+id+" Successfully Deleted";
 
     }
-
     @Override
-    public AdminEntity updateAdminById(Long id, AdminEntity entity)throws AdminException {
-        AdminEntity entity1=adminRepository.findByEmail(entity.getEmail());
-        if (entity1!=null && !entity.getEmail().equals(entity1.getEmail())){
+    public AdminDto updateAdminById(Long id, AdminDto entity)throws AdminException {
+        Optional<AdminEntity> entity1=adminRepository.findByEmail(entity.getEmail());
+        if (entity1.isPresent() && entity1.get().getId()!= entity.getId())
+        {
             throw new AdminException(HttpStatus.FORBIDDEN," Email Already Exist with Another Id");
         }
-        AdminEntity entity2=adminRepository.findByPhoneNumber(entity.getPhoneNumber());
-        if (entity2!=null && !entity.getPhoneNumber().equals(entity2.getPhoneNumber())){
-            throw new AdminException(HttpStatus.FORBIDDEN,"PhoneNumber Already Exist with Another Id");
-        }
-        return adminRepository.save(entity);
+        Optional<AdminEntity> entity2=adminRepository.findByPhoneNumber(entity.getPhoneNumber());
+        if ((entity2.isPresent() && entity2.get().getId()!= entity.getId())){
+                throw new AdminException(HttpStatus.FORBIDDEN,"PhoneNumber Already Exist with Another Id");
+            }
+        return (AdminDto) adminRepository.save(entity);
     }
 }

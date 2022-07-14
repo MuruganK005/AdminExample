@@ -23,9 +23,5 @@ public class Address{
     private String city;
     private String state;
     private Long pinCode;
-//    @OneToOne
-//    @JoinColumn(name = "admin_id")
-//    private AdminEntity admin;
-
 
 }

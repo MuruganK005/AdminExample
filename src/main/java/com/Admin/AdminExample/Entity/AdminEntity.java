@@ -28,6 +28,6 @@ public class AdminEntity {
     @JoinColumn(name = "address_id")
     private Address address;
     @Enumerated(EnumType.STRING)
-    private TypesOfRole roles;
+    private TypesOfRole rolesCreator;
 }
 

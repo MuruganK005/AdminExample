@@ -2,7 +2,7 @@ package com.Admin.AdminExample.Controller;
 
 import com.Admin.AdminExample.Entity.SuperAdmin;
 import com.Admin.AdminExample.Service.SuperAdminService;
-import net.bytebuddy.implementation.bind.annotation.Super;
+import com.Admin.AdminExample.dto.SuperAdminDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +16,7 @@ public class SuperAdminController {
     private SuperAdminService adminService;
 
     @PostMapping("createSuperAdmin")
-    public SuperAdmin createSuperAdmin(@RequestBody SuperAdmin admin){
+    public SuperAdminDto createSuperAdmin(@RequestBody SuperAdminDto admin){
         return adminService.createSuperAdmin(admin);
     }
     @GetMapping("getAllSuperAdmin")

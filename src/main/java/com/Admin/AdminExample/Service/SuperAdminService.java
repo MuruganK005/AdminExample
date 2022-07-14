@@ -2,6 +2,7 @@ package com.Admin.AdminExample.Service;
 
 import com.Admin.AdminExample.Entity.SuperAdmin;
 import com.Admin.AdminExample.Repository.SuperAdminRepository;
+import com.Admin.AdminExample.dto.SuperAdminDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,19 +14,16 @@ public class SuperAdminService implements ServiceImpl{
     @Autowired
     private SuperAdminRepository repository;
     @Override
-    public SuperAdmin createSuperAdmin(SuperAdmin admin) {
+    public SuperAdminDto createSuperAdmin(SuperAdminDto admin) {
         return repository.save(admin);
     }
-
     @Override
     public List<SuperAdmin> getAllSuperAdmin() {
         return repository.findAll();
     }
-
     public Optional<SuperAdmin> getSuperAdminById(Long id) {
         return repository.findById(id);
     }
-
     @Override
     public String deleteSuperAdminById(Long id) {
         return "SuperAdmin "+id+" Deleted SuccessFully";
