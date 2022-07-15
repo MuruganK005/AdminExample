@@ -53,6 +53,7 @@ public class AdminService implements AdminImpl{
 
     @Override
     public List<AdminEntity> getAllAdmin() {
+
         return adminRepository.findAll();
     }
 
@@ -76,6 +77,21 @@ public class AdminService implements AdminImpl{
             }
         AdminEntity entity3=model.map(entity,AdminEntity.class);
         return adminRepository.save(entity3);
+    }
+
+    @Override
+    public List<AdminEntity> getAllDeletedRecords() {
+        return adminRepository.findByDeleted(true);
+    }
+
+    @Override
+    public String softdDeleteAdminById(Long id) {
+         Optional<AdminEntity> entity=adminRepository.findById(id);
+         if (entity.isPresent()){
+             entity.get().setDeleted(true);
+             adminRepository.save(entity.get());
+         }
+         return "Admin SoftDelete Successful";
     }
 
 //    @Override

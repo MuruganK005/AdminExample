@@ -24,6 +24,7 @@ public class AdminDto{
     private String email;
     private Address address;
     private TypesOfRole rolesCreator;
+    private Boolean deleted=false;
 
 //    public AdminDto(Long l, String murugan, Long l1, String s, Address addresss, TypesOfRole superAdmin) {
 //        id = l;

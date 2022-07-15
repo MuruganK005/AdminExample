@@ -5,7 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import javax.persistence.*;
 
 @Entity
@@ -14,6 +15,8 @@ import javax.persistence.*;
 @Table(name = "AdminTable")
 @NoArgsConstructor
 @AllArgsConstructor
+//@SQLDelete(sql = "Update admin_table SET account_state = true WHERE id=?")
+//@Where(clause = "account_state=false")
 public class AdminEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,5 +32,7 @@ public class AdminEntity {
     private Address address;
     @Enumerated(EnumType.STRING)
     private TypesOfRole rolesCreator;
+    @Column(name = "AccountState")
+    private Boolean deleted=false;
 }
 

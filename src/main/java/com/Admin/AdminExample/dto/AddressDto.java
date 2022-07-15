@@ -13,4 +13,5 @@ public class AddressDto {
     private String city;
     private String state;
     private Long pinCode;
+
 }

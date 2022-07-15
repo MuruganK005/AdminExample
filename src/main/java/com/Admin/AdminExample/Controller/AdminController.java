@@ -22,7 +22,7 @@ public class AdminController {
     public AdminEntity createAdmin(@RequestBody AdminDto entity)throws AdminException {
         return adminService.createAdmin(entity);
     }
-    @GetMapping("/{id}")
+    @GetMapping("/getById/{id}")
     public Optional<AdminEntity> getById(@PathVariable Long id){
         return adminService.getById(id);
     }
@@ -34,7 +34,7 @@ public class AdminController {
     public String deleteAdminById(@PathVariable Long id){
         return adminService.deleteAdminById(id);
     }
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public AdminEntity updateAdminById(@PathVariable Long id,@RequestBody AdminDto entity) throws AdminException {
         return adminService.updateAdminById(id,entity);
     }
@@ -42,6 +42,14 @@ public class AdminController {
     public String getObjectAsString(@RequestBody AdminDto dto) throws JsonProcessingException {
         ObjectMapper objectMapper=new ObjectMapper();
         return objectMapper.writeValueAsString(dto);
+    }
+    @GetMapping("getDeletedrecords")
+    public List<AdminEntity> getAllDeletedRecords(){
+        return adminService.getAllDeletedRecords();
+    }
+    @DeleteMapping("softDelete/{id}")
+    public String softDeleteAdminById(@PathVariable Long id){
+        return adminService.softdDeleteAdminById(id);
     }
 //    @PutMapping("/admin/{id}")
 //    public AdminDto replaceAdmin(@RequestBody AdminDto adminDto) {

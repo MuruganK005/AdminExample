@@ -14,6 +14,10 @@ public interface AdminImpl {
     String deleteAdminById(Long id);
     AdminEntity updateAdminById(Long id, AdminDto entity)throws AdminException;
 
+    List<AdminEntity> getAllDeletedRecords();
+
+    String softdDeleteAdminById(Long id);
+
 //    Optional<Object> findById(Long id);
 
 //    AdminDto replaceAdmin(Long id);

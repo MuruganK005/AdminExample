@@ -7,6 +7,7 @@ import com.Admin.AdminExample.dto.AdminDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -15,4 +16,6 @@ public interface AdminRepository extends JpaRepository<AdminEntity,Long> {
     Optional<AdminEntity> findById(Long id);
 
     Optional<AdminEntity> findByPhoneNumber(Long phoneNumber);
+
+    List<AdminEntity> findByDeleted(Boolean b);
 }
