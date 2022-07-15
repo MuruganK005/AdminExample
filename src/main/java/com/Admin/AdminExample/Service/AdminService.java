@@ -5,6 +5,7 @@ import com.Admin.AdminExample.Enum.TypesOfRole;
 import com.Admin.AdminExample.Exception.AdminException;
 import com.Admin.AdminExample.Repository.AdminRepository;
 import com.Admin.AdminExample.dto.AdminDto;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,18 @@ public class AdminService implements AdminImpl{
 
     @Autowired
     private AdminRepository adminRepository;
+//    private java.lang.Object Object;
+
     @Override
-    public AdminDto createAdmin(AdminDto entity) throws AdminException {
+    public AdminEntity createAdmin(AdminDto entity) throws AdminException {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+        if (entity.getId() == null) {
+            Optional<AdminEntity> adminEntity = adminRepository.findById(entity.getId());
+            if (adminEntity.isPresent()) {
+                throw new AdminException(HttpStatus.FORBIDDEN," Record Not Found");
+            }
+        }
         Optional<AdminEntity> entity1=adminRepository.findByEmail(entity.getEmail());
         if (entity1.isPresent() && entity1.get().getId() != entity.getId()){
             throw new AdminException(HttpStatus.FORBIDDEN," Email Already Exist");
@@ -28,7 +39,8 @@ public class AdminService implements AdminImpl{
             throw new AdminException(HttpStatus.FORBIDDEN,"PhoneNumber Already Exist");
         }
         if (TypesOfRole.SUPER_ADMIN.equals(entity.getRolesCreator())) {
-                return adminRepository.save(entity);
+            AdminEntity adminEntity = modelMapper.map(entity, AdminEntity.class);
+                return adminRepository.save(adminEntity);
         } else {
             throw new AdminException(HttpStatus.BAD_REQUEST,"You are Not Super_Admin");
         }
@@ -48,10 +60,11 @@ public class AdminService implements AdminImpl{
     public String deleteAdminById(Long id) {
            adminRepository.deleteById(id);
         return "Admin "+id+" Successfully Deleted";
-
     }
     @Override
-    public AdminDto updateAdminById(Long id, AdminDto entity)throws AdminException {
+    public AdminEntity updateAdminById(Long id, AdminDto entity)throws AdminException {
+        ModelMapper model=new ModelMapper();
+        model.getConfiguration().setAmbiguityIgnored(true);
         Optional<AdminEntity> entity1=adminRepository.findByEmail(entity.getEmail());
         if (entity1.isPresent() && entity1.get().getId()!= entity.getId())
         {
@@ -61,6 +74,17 @@ public class AdminService implements AdminImpl{
         if ((entity2.isPresent() && entity2.get().getId()!= entity.getId())){
                 throw new AdminException(HttpStatus.FORBIDDEN,"PhoneNumber Already Exist with Another Id");
             }
-        return (AdminDto) adminRepository.save(entity);
+        AdminEntity entity3=model.map(entity,AdminEntity.class);
+        return adminRepository.save(entity3);
     }
+
+//    @Override
+//    public Optional<Object> findById(Long id) {
+//        return adminRepository.findById(id);
+//    }
+//
+//    @Override
+//    public AdminDto replaceAdmin(Long id, AdminDto adminDto) {
+//        return adminRepository.save(id);
+//    }
 }

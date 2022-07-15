@@ -15,10 +15,10 @@ import javax.persistence.Id;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminDto extends AdminEntity {
+public class AdminDto{
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long id=null;
     private String name;
     private Long phoneNumber;
     private String email;
