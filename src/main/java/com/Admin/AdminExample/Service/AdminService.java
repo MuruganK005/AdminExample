@@ -5,11 +5,14 @@ import com.Admin.AdminExample.Enum.TypesOfRole;
 import com.Admin.AdminExample.Exception.AdminException;
 import com.Admin.AdminExample.Repository.AdminRepository;
 import com.Admin.AdminExample.dto.AdminDto;
+import org.hibernate.Filter;
+import org.hibernate.Session;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +21,8 @@ public class AdminService implements AdminImpl{
 
     @Autowired
     private AdminRepository adminRepository;
+    @Autowired
+    private EntityManager entityManager;
 //    private java.lang.Object Object;
 
     @Override
@@ -54,7 +59,7 @@ public class AdminService implements AdminImpl{
     @Override
     public List<AdminEntity> getAllAdmin() {
 
-        return adminRepository.findAll();
+        return adminRepository.findByDeleted(false);
     }
 
     @Override
@@ -92,6 +97,16 @@ public class AdminService implements AdminImpl{
              adminRepository.save(entity.get());
          }
          return "Admin SoftDelete Successful";
+    }
+
+    @Override
+    public Iterable<AdminEntity> getAllSoftDeletedAdmin(Boolean isDeleted) {
+        Session session= entityManager.unwrap(Session.class);
+        Filter filter= session.enableFilter("deletedAdminFilter");
+        filter.setParameter("isDeleted",isDeleted);
+        Iterable<AdminEntity> entityIterable=adminRepository.findAll();
+        session.disableFilter("deletedAdminFilter");
+        return entityIterable;
     }
 
 //    @Override

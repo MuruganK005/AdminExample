@@ -51,6 +51,10 @@ public class AdminController {
     public String softDeleteAdminById(@PathVariable Long id){
         return adminService.softdDeleteAdminById(id);
     }
+    @GetMapping("getAllSoftDeletedAdmin")
+    public Iterable<AdminEntity> getAllSoftDeletedAdmin(@RequestParam Boolean isDeleted){
+        return adminService.getAllSoftDeletedAdmin(isDeleted);
+    }
 //    @PutMapping("/admin/{id}")
 //    public AdminDto replaceAdmin(@RequestBody AdminDto adminDto) {
 //

@@ -18,6 +18,10 @@ public interface AdminImpl {
 
     String softdDeleteAdminById(Long id);
 
+//    Iterable<AdminEntity> getAllSoftDeletedAdmin(Boolean);
+
+    Iterable<AdminEntity> getAllSoftDeletedAdmin(Boolean isDeleted);
+
 //    Optional<Object> findById(Long id);
 
 //    AdminDto replaceAdmin(Long id);
