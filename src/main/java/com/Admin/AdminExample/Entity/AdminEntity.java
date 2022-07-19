@@ -1,19 +1,13 @@
 package com.Admin.AdminExample.Entity;
-
 import com.Admin.AdminExample.Enum.TypesOfRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.*;
-import org.springframework.lang.Nullable;
-
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
-
 @Entity
 @Getter
 @Setter
@@ -40,5 +34,7 @@ public class AdminEntity {
     private TypesOfRole rolesCreator;
     @Column(name = "AccountState")
     private Boolean deleted=false;
+    @Column(name = "blockUnblock")
+    private Boolean status=false;
 }
 

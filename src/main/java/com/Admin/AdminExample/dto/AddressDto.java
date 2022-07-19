@@ -1,8 +1,6 @@
 package com.Admin.AdminExample.dto;
-
 import lombok.Getter;
 import lombok.Setter;
-
 @Getter
 @Setter
 public class AddressDto {
@@ -12,6 +10,6 @@ public class AddressDto {
     private String landMark;
     private String city;
     private String state;
+    private String country;
     private Long pinCode;
-
 }

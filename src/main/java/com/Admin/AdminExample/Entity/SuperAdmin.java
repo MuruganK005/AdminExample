@@ -1,5 +1,4 @@
 package com.Admin.AdminExample.Entity;
-
 import com.Admin.AdminExample.Enum.TypesOfRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,4 +20,9 @@ public class SuperAdmin {
     private String superAdminPhNumber;
     @Enumerated(EnumType.STRING)
     private TypesOfRole role;
+    @Column(name = "blockUnblock")
+    private Boolean status=false;
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address address;
 }

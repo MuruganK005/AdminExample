@@ -18,4 +18,6 @@ public interface AdminRepository extends JpaRepository<AdminEntity,Long> {
     Optional<AdminEntity> findByPhoneNumber(Long phoneNumber);
 
     List<AdminEntity> findByDeleted(Boolean b);
+
+    Optional<AdminEntity> findByStatus(Boolean status);
 }
