@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ServiceImpl {
-    SuperAdminDto createSuperAdmin(SuperAdminDto admin);
+    SuperAdmin createSuperAdmin(SuperAdminDto admin);
     List<SuperAdmin> getAllSuperAdmin();
     Optional<SuperAdmin> getSuperAdminById(Long id);
     String deleteSuperAdminById(Long id);

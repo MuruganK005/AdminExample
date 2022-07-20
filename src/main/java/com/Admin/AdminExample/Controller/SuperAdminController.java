@@ -15,11 +15,11 @@ public class SuperAdminController {
     @Autowired
     private SuperAdminService adminService;
 
-    @PostMapping("createSuperAdmin")
-    public SuperAdminDto createSuperAdmin(@RequestBody SuperAdminDto admin){
+    @PostMapping("/createSuperAdmin")
+    public SuperAdmin createSuperAdmin(@RequestBody SuperAdminDto admin){
         return adminService.createSuperAdmin(admin);
     }
-    @GetMapping("getAllSuperAdmin")
+    @GetMapping("/getAllSuperAdmin")
     public List<SuperAdmin> getAllSuperAdmin(){
         return adminService.getAllSuperAdmin();
     }

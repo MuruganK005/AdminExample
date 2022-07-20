@@ -8,4 +8,6 @@ public interface BlockImpl {
     AdminEntity setBlockBySuperAdmin(AdminDto dto, Long id);
 
     String setBlockBySuperAdmin1(String Roll,Long id)throws AdminException;
+
+    String setBlockBySuperAdmin2(String roll, Long id) throws AdminException;
 }

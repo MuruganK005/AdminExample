@@ -23,7 +23,7 @@ public class AdminService implements AdminImpl {
     public AdminEntity createAdmin(AdminDto entity) throws AdminException {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
-        if (entity.getId() == null) {
+        if (entity.getId() != null) {
             Optional<AdminEntity> adminEntity = adminRepository.findById(entity.getId());
             if (adminEntity.isPresent()) {
                 throw new AdminException(HttpStatus.FORBIDDEN, " Record Not Found");

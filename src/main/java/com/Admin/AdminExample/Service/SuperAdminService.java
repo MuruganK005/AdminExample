@@ -3,6 +3,7 @@ package com.Admin.AdminExample.Service;
 import com.Admin.AdminExample.Entity.SuperAdmin;
 import com.Admin.AdminExample.Repository.SuperAdminRepository;
 import com.Admin.AdminExample.dto.SuperAdminDto;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +15,11 @@ public class SuperAdminService implements ServiceImpl{
     @Autowired
     private SuperAdminRepository repository;
     @Override
-    public SuperAdminDto createSuperAdmin(SuperAdminDto admin) {
-        return repository.save(admin);
+    public SuperAdmin createSuperAdmin(SuperAdminDto admin) {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+        SuperAdmin entity=modelMapper.map(admin,SuperAdmin.class);
+        return repository.save(entity);
     }
     @Override
     public List<SuperAdmin> getAllSuperAdmin() {

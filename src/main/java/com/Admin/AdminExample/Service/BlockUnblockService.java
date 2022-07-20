@@ -44,4 +44,18 @@ public class BlockUnblockService implements BlockImpl{
 //        }
         return "Admin has Blocked ";
     }
+
+    @Override
+    public String setBlockBySuperAdmin2(String roll, Long id) throws AdminException {
+        if(roll.equals("SUPER_ADMIN")){
+            Optional<AdminEntity> entity=repo.findById(id);
+            if (entity.isPresent()){
+                entity.get().setStatus(false);
+                repo.save(entity.get());
+            }
+        } else if (!roll.equals("SUPER_ADMIN")){
+            throw new AdminException(HttpStatus.FORBIDDEN,"Your Not Super Admin");
+        }
+        return "Admin "+id+" has UnBlocked";
+    }
 }

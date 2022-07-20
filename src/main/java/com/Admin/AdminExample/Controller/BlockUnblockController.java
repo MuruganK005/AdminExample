@@ -20,6 +20,10 @@ public class BlockUnblockController {
     public String setBlockBySuperAdmin1(@RequestParam String Roll,@PathVariable Long id)throws AdminException {
         return unblockService.setBlockBySuperAdmin1(Roll,id);
     }
+    @PutMapping("/setUnBlocked/{id}")
+    public String setBlockBySuperAdmin2(@RequestParam String Roll,@PathVariable Long id)throws AdminException {
+        return unblockService.setBlockBySuperAdmin2(Roll,id);
+    }
 
 
 }
